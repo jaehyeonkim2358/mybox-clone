@@ -17,10 +17,10 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            source ~/.bashrc
             source /etc/bash.bashrc
             cd mybox-clone
             git pull origin main
             ./gradlew build
             cd build/libs
+            source /etc/bash.bashrc
             java -jar mybox-clone-0.0.1-SNAPSHOT.jar
