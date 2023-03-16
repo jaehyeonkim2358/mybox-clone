@@ -7,7 +7,7 @@ on:
 jobs:
   AUTO_DEPLOY:
     runs-on: ubuntu-latest
-    name: TEST
+    name: AUTO_DEPLOY
     steps:
       - name: Run scripts in server
         uses: appleboy/ssh-action@master
@@ -16,4 +16,9 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
-          script: whoami
+          script: |
+            cd mybox-clone
+            git pull
+            ./gradlew build
+            cd build/libs
+            nohup java -jar mybox-clone-0.0.1-SNAPSHOT.jar &
