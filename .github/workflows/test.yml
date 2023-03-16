@@ -1,0 +1,19 @@
+name: test
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  AUTO_DEPLOY:
+    runs-on: ubuntu-18.04
+    name: Build
+    steps:
+      - name: Run scripts in server
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: whoami
