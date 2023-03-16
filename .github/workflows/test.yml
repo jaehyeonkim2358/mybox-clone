@@ -7,13 +7,13 @@ on:
 jobs:
   AUTO_DEPLOY:
     runs-on: ubuntu-18.04
-    name: Build
+    name: TEST
     steps:
       - name: Run scripts in server
         uses: appleboy/ssh-action@v0.1.8
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
           script: whoami
