@@ -1,11 +1,9 @@
 spring:
   profiles:
     include: db
-  #  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/mybox?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
-#    username: mybox
-#    password: mybox
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     open-in-view: false
