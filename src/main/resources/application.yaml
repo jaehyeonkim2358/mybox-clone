@@ -1,9 +1,10 @@
 spring:
-  profiles:
-    include: db
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+  profiles:
+    include: db
 
   jpa:
     open-in-view: false
