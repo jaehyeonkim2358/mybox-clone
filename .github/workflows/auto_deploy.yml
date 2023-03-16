@@ -22,4 +22,5 @@ jobs:
             git pull origin main
             ./gradlew build
             cd build/libs
+            source /etc/bash.bashrc
             nohup java -jar mybox-clone-0.0.1-SNAPSHOT.jar &
