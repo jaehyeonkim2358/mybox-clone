@@ -1,13 +1,15 @@
 package com.clonecoding.myboxclone.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SignupReqDTO {
+public class LoginReqDTO {
     private String email;
-    private String name;
     private String password;
 }
