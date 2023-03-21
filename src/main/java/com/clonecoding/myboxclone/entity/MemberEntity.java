@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -25,10 +27,20 @@ public class MemberEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @ManyToMany
+    @JoinTable(
+            name = "member_authority",
+            joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")}
+    )
+    private Set<Authority> authorities = new HashSet<>();
+
     @Builder
-    public MemberEntity(String email, String name, String password) {
+    public MemberEntity(Long member_id, String email, String name, String password, Set<Authority> authorities) {
+        this.member_id = member_id;
         this.email = email;
         this.name = name;
         this.password = password;
+        this.authorities = authorities;
     }
 }
