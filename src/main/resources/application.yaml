@@ -4,7 +4,9 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   profiles:
-    include: db
+    include:
+      - db
+      - token
 
   jpa:
     open-in-view: false

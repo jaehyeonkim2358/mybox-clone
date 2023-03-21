@@ -1,5 +1,6 @@
 package com.clonecoding.myboxclone.controller;
 
+import com.clonecoding.myboxclone.dto.LoginReqDTO;
 import com.clonecoding.myboxclone.dto.MemberReqDTO;
 import com.clonecoding.myboxclone.dto.MemberResDTO;
 import com.clonecoding.myboxclone.dto.TokenDTO;
@@ -17,11 +18,12 @@ public class AuthController {
     private final AuthService authService;
     @PostMapping("signup")
     public MemberResDTO signup(@RequestBody MemberReqDTO memberReqDTO) {
+        log.debug("signup controller !!!");
         return authService.signup(memberReqDTO);
     }
 
     @PostMapping("login")
-    public TokenDTO login() {
-        return null;
+    public TokenDTO login(@RequestBody LoginReqDTO loginReqDTO) {
+        return authService.login(loginReqDTO);
     }
 }

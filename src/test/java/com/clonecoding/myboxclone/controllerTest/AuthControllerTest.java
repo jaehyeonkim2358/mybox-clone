@@ -1,6 +1,7 @@
 package com.clonecoding.myboxclone.controllerTest;
 
 import com.clonecoding.myboxclone.controller.AuthController;
+import com.clonecoding.myboxclone.dto.LoginReqDTO;
 import com.clonecoding.myboxclone.dto.MemberReqDTO;
 import com.clonecoding.myboxclone.entity.MemberRepository;
 import com.clonecoding.myboxclone.service.AuthService;
@@ -20,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -37,9 +39,12 @@ public class AuthControllerTest {
     private MemberRepository memberRepository;
     @Mock
     private PasswordEncoder passwordEncoder;
+    @Mock
+    private LoginReqDTO loginReqDTO;
     private MockMvc mockMvc;
     AutoCloseable openMocks;
-    ObjectMapper objectMapper = new ObjectMapper();
+//    ObjectMapper objectMapper = new ObjectMapper();
+    ObjectMapper objectMapper;
 
     @BeforeEach
     public void setup() {
@@ -57,10 +62,69 @@ public class AuthControllerTest {
                 .password("1234")
                 .build();
 
+        objectMapper = new ObjectMapper();
+
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/auth/signup")
                 .content(objectMapper.writeValueAsString(memberReqDTO))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("로그인 성공 테스트")
+    @Order(2)
+    public void loginSuccessTest() throws Exception {
+        loginReqDTO = LoginReqDTO.builder()
+                .email("abc@mail.com")
+                .password("1234")
+                .build();
+
+        objectMapper = new ObjectMapper();
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/auth/login")
+                .content(objectMapper.writeValueAsString(loginReqDTO))
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("로그인 실패 테스트_잘못된 이메일")
+    @Order(3)
+    public void loginFailTest_1() throws Exception {
+        loginReqDTO = LoginReqDTO.builder()
+                .email("abcd@mail.com")     // 잘못된 email
+                .password("1234")
+                .build();
+
+        objectMapper = new ObjectMapper();
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/auth/login")
+                .content(objectMapper.writeValueAsString(loginReqDTO))
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isExpectationFailed());
+    }
+
+    @Test
+    @DisplayName("로그인 실패 테스트_잘못된 비밀번호")
+    @Order(4)
+    public void loginFailTest_2() throws Exception {
+        loginReqDTO = LoginReqDTO.builder()
+                .email("abc@mail.com")
+                .password("12345")      // 잘못된 password
+                .build();
+
+        objectMapper = new ObjectMapper();
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/auth/login")
+                        .content(objectMapper.writeValueAsString(loginReqDTO)
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isExpectationFailed())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 }

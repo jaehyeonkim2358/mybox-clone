@@ -1,0 +1,5 @@
+jwt:
+  header: Authoriation
+  secret: aGVsbG8tbXktbmFtZS1pcy1qYWVoeWVvbi10aGlzLWtleS1pcy12ZXJ5LWltcG9ydGFudC1zby1iZS1jYXJlZnVsLXRoYW5rLXlvdS1oYWhh
+  access-token-expire-time: 60000
+  refresh-token-expire-time: 604800000
